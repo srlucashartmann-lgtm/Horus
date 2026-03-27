@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"react-grid-layout\\\\|GridLayout\" C:UsersLucasDesktopSISTEMA-HÓRUS-FINALfull-versionsrc --include=*.tsx --include=*.ts)",
+      "Bash(npx tsc:*)",
+      "Bash(xargs grep:*)",
+      "Bash(cat:*)",
+      "Bash(node -e \"const bcrypt = require\\(''bcryptjs''\\); console.log\\(bcrypt.hashSync\\(''M0ntad0res!@#'', 10\\)\\);\")"
+    ]
+  }
+}

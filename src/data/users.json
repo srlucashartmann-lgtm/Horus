@@ -1,0 +1,85 @@
+[
+  {
+    "id": "1",
+    "name": "Lucas Hartmann",
+    "email": "srlucashartmann@gmail.com",
+    "password": "$2b$10$0OESsXYKzAqCUuAzdAg/lO71VW.l/tWK/PzxdkWrRGkfVLWTj0tVm",
+    "role": "admin",
+    "permissions": [
+      "war-room",
+      "tracking",
+      "cross-tabs",
+      "simulacoes",
+      "sessoes",
+      "clipes",
+      "sentimentos",
+      "alertas",
+      "sintese",
+      "causa-efeito",
+      "configuracoes"
+    ],
+    "avatar": "/assets/images/users/avatar-1.png",
+    "active": true,
+    "createdAt": "2026-03-20"
+  },
+  {
+    "id": "2",
+    "name": "Analista Hórus",
+    "email": "analista@horus.com",
+    "password": "$2b$10$LTMWlEU/4YjW.qwCneDIvu0EUKU.jBttog9PLRSD6ali4gmcrZKqO",
+    "role": "analista",
+    "permissions": [
+      "war-room",
+      "tracking"
+    ],
+    "avatar": "/assets/images/users/avatar-2.png",
+    "active": true,
+    "createdAt": "2026-03-20"
+  },
+  {
+    "id": "3",
+    "name": "Lucas Hartmann",
+    "email": "lucas-hartmann@outlook.com.br",
+    "password": "$2b$10$gWMitRyJOOl60qS./C1ioucSzhIpPIz/El6qaXJsn/dUgEQilB4VO",
+    "role": "admin",
+    "permissions": [
+      "war-room",
+      "tracking",
+      "cross-tabs",
+      "simulacoes",
+      "sessoes",
+      "clipes",
+      "sentimentos",
+      "alertas",
+      "sintese",
+      "causa-efeito",
+      "configuracoes"
+    ],
+    "avatar": "/assets/images/users/avatar-1.png",
+    "active": true,
+    "createdAt": "2026-03-22"
+  },
+  {
+    "id": "4",
+    "name": "Gabriel Correa",
+    "email": "gcorrea@nacao.com.br",
+    "password": "$2b$10$ONsVpX3sYsA2Y3FWDEqu7.Rk30V0crGO4QCitQJUGgJ93SDOKktlG",
+    "role": "admin",
+    "permissions": [
+      "war-room",
+      "tracking",
+      "cross-tabs",
+      "simulacoes",
+      "sessoes",
+      "clipes",
+      "sentimentos",
+      "alertas",
+      "sintese",
+      "causa-efeito",
+      "configuracoes"
+    ],
+    "avatar": "/assets/images/users/avatar-1.png",
+    "active": true,
+    "createdAt": "2026-03-22"
+  }
+]

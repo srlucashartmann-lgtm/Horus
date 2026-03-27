@@ -1,0 +1,247 @@
+import { useMemo, useState } from 'react';
+
+// material-ui
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import Fab from '@mui/material/Fab';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+// project-imports
+import ColorScheme from './ColorScheme';
+import MenuCaption from './MenuCaption';
+import ThemeContrast from './ThemeContrast';
+import ThemeFont from './ThemeFont';
+import ThemeLayout from './ThemeLayout';
+import ThemeMenuDirection from './ThemeMenuDirection';
+import ThemeModeComponent from './ThemeMode';
+import ThemeWidth from './ThemeWidth';
+
+import IconButton from 'components/@extended/IconButton';
+import MainCard from 'components/MainCard';
+import SimpleBar from 'components/third-party/SimpleBar';
+import { GRID_COMMON_SPACING, HEADER_HEIGHT } from 'config';
+
+// assets
+import { Add, Setting2 } from '@wandersonalwes/iconsax-react';
+
+// ==============================|| HEADER CONTENT - CUSTOMIZATION ||============================== //
+
+export default function Customization() {
+  const themeLayout = useMemo(() => <ThemeLayout />, []);
+
+  const themeDirection = useMemo(() => <ThemeMenuDirection />, []);
+
+  const themeMode = useMemo(() => <ThemeModeComponent />, []);
+
+  const themeContrastView = useMemo(() => <ThemeContrast />, []);
+
+  const menuCaptionView = useMemo(() => <MenuCaption />, []);
+
+  const themeColor = useMemo(() => <ColorScheme />, []);
+
+  const themeWidth = useMemo(() => <ThemeWidth />, []);
+
+  const themeFont = useMemo(() => <ThemeFont />, []);
+
+  const [open, setOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <Fab
+        component="div"
+        onClick={handleToggle}
+        size="large"
+        variant="circular"
+        tabIndex={-1}
+        role="presentation"
+        sx={(theme) => ({
+          borderRadius: 0,
+          borderTopLeftRadius: '50%',
+          borderBottomLeftRadius: '50%',
+          borderTopRightRadius: '4px',
+          borderBottomRightRadius: '4px',
+          top: '14%',
+          position: 'fixed',
+          right: 0,
+          zIndex: 1200,
+          boxShadow: theme.vars.customShadows.z1,
+          bgcolor: 'background.paper',
+          border: '4px solid ',
+          borderColor: 'background.paper',
+          borderRight: 'none',
+          '&:hover': { bgcolor: 'primary.lighter' }
+        })}
+      >
+        <IconButton
+          onClick={handleToggle}
+          aria-label="settings toggler"
+          size="large"
+          sx={{ p: 0, '& :hover': { bgcolor: 'red' }, '& svg': { width: 28, height: 28 } }}
+        >
+          <Setting2 variant="Bulk" />
+        </IconButton>
+      </Fab>
+      <Drawer
+        sx={{
+          zIndex: 2001
+        }}
+        anchor="right"
+        onClose={handleToggle}
+        open={open}
+        slotProps={{ paper: { sx: { width: 350, overflowY: 'hidden' } } }}
+      >
+        {open && (
+          <MainCard content={false} border={false}>
+            <Stack direction="row" sx={{ gap: 1.5, alignItems: 'center', justifyContent: 'space-between', p: 2.5 }}>
+              <Typography variant="h5">Configurações</Typography>
+              <IconButton color="error" sx={{ p: 0 }} onClick={handleToggle}>
+                <Add size={28} style={{ transform: 'rotate(45deg)' }} />
+              </IconButton>
+            </Stack>
+            <Box sx={{ height: 'calc(100vh - 76px)' }}>
+              <SimpleBar sx={{ '& .simplebar-content': { display: 'flex', flexDirection: 'column' } }}>
+                <Box sx={{ p: 3, height: `calc(100vh - ${HEADER_HEIGHT}px)` }}>
+                  <Grid container spacing={GRID_COMMON_SPACING}>
+                    {/* theme-mode */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Modo do Tema
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha entre modo claro ou escuro
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeMode}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* theme-contrast */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Contraste do Tema
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha o contraste e sombras
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeContrastView}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* custom-theme */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Cor do Tema
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha a cor primária do tema
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeColor}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* menu-caption */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Legenda da Sidebar
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Mostrar ou ocultar legendas do menu
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{menuCaptionView}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* theme-layout */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Layout do Tema
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha o layout do menu
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeLayout}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* theme-orientation */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Direção do Menu
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha a direção do tema (LTR ou RTL)
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeDirection}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* theme-container */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Largura do Layout
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha layout fluido ou contêiner
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeWidth}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+
+                    {/* theme-font-family */}
+                    <Grid size={12}>
+                      <Stack>
+                        <Typography variant="subtitle1" sx={{ color: 'text.primary' }}>
+                          Fonte
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          Escolha a família de fontes
+                        </Typography>
+                      </Stack>
+                    </Grid>
+                    <Grid size={12}>{themeFont}</Grid>
+                    <Grid size={12}>
+                      <Divider />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </SimpleBar>
+            </Box>
+          </MainCard>
+        )}
+      </Drawer>
+    </>
+  );
+}
