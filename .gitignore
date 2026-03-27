@@ -23,7 +23,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.yarn*
+# Yarn Berry: não ignorar .yarnrc.yml (CI/Netlify precisa de nodeLinker etc.)
+.yarn/cache
+.yarn/install-state.gz
+.yarn/build-state.yml
 
 # local env files (nunca commitar segredos)
 .env

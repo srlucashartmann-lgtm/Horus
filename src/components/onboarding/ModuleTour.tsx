@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import { useEffect, useCallback, useState, useRef, useMemo, type HTMLAttributes } from 'react';
 import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/react';
-import { EVENTS, type CallBackProps, type TooltipRenderProps } from 'react-joyride';
+import { EVENTS, type EventData, type TooltipRenderProps, STATUS } from 'react-joyride';
 import { alpha, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,7 +15,10 @@ import Typography from '@mui/material/Typography';
 import { useOnboarding, TourId } from './OnboardingProvider';
 import { TOUR_STEPS } from './TourSteps';
 
-const Joyride = dynamic(() => import('react-joyride'), { ssr: false });
+const Joyride = dynamic(
+  () => import('react-joyride').then((mod) => ({ default: mod.Joyride })),
+  { ssr: false }
+);
 
 /** Resolve o elemento do passo (ignora `body` / centralizado). */
 function resolveStepTargetElement(target: string | HTMLElement | undefined | null): Element | null {
@@ -147,6 +150,8 @@ function OnboardingTooltip({
   const textMid = `var(--text-mid, ${theme.vars?.palette?.text?.secondary ?? theme.palette.text.secondary})`;
   const textLow = `var(--text-low, ${theme.vars?.palette?.text?.disabled ?? theme.palette.text.disabled})`;
 
+  const tooltipDivProps = tooltipProps as HTMLAttributes<HTMLDivElement>;
+
   if (isWelcome) {
     const welcomeTitle = userFirstName
       ? `Bem-vindo ao Hórus, ${userFirstName}!`
@@ -154,9 +159,9 @@ function OnboardingTooltip({
 
     return (
       <div
-        {...tooltipProps}
+        {...tooltipDivProps}
         style={{
-          ...tooltipProps.style,
+          ...tooltipDivProps.style,
           userSelect: 'none',
           zIndex: 99999,
           overflow: 'visible',
@@ -254,9 +259,9 @@ function OnboardingTooltip({
 
   return (
     <div
-      {...tooltipProps}
+      {...tooltipDivProps}
       style={{
-        ...tooltipProps.style,
+        ...tooltipDivProps.style,
         userSelect: 'none',
         zIndex: 99999,
         overflow: 'visible',
@@ -403,8 +408,8 @@ export default function ModuleTour({ tourId, autoStart = true, delay = 800 }: Pr
     return () => clearTimeout(timer);
   }, [tourId, autoStart, delay, isTourCompleted, startTour, steps.length]);
 
-  const handleCallback = useCallback(
-    (data: CallBackProps) => {
+  const handleEvent = useCallback(
+    (data: EventData) => {
       const { status, index, type, step } = data;
 
       // Índice do passo atual (evita `step:after`, que no Joyride costuma referir-se ao passo anterior).
@@ -430,8 +435,7 @@ export default function ModuleTour({ tourId, autoStart = true, delay = 800 }: Pr
         }
       }
 
-      const finishedStatuses: string[] = ['finished', 'skipped'];
-      if (finishedStatuses.includes(status as string)) {
+      if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
         completeTour(tourId);
         setCurrentStepIndex(0);
       }
@@ -447,21 +451,12 @@ export default function ModuleTour({ tourId, autoStart = true, delay = 800 }: Pr
     <>
       <SpotlightOverlay target={currentTarget as string} active={true} />
       <Joyride
-        steps={steps as any}
+        steps={steps}
         run={true}
         continuous={true}
-        showSkipButton={true}
-        disableScrolling={false}
         scrollToFirstStep={true}
-        scrollOffset={100}
-        scrollDuration={400}
-        spotlightClicks={true}
-        spotlightPadding={10}
-        disableOverlay={true}
-        disableOverlayClose={false}
-        disableScrollParentFix={false}
-        tooltipComponent={TooltipComponent as any}
-        callback={handleCallback}
+        tooltipComponent={TooltipComponent}
+        onEvent={handleEvent}
         locale={{
           back: 'Anterior',
           close: 'Fechar',
@@ -470,24 +465,26 @@ export default function ModuleTour({ tourId, autoStart = true, delay = 800 }: Pr
           open: 'Abrir',
           skip: 'Pular Tour'
         }}
-        styles={{
-          options: {
-            zIndex: 99999,
-            primaryColor: theme.palette.primary.main,
-            arrowColor: paperBg,
-            backgroundColor: paperBg,
-            textColor: theme.palette.text.primary
-          }
+        options={{
+          zIndex: 99999,
+          primaryColor: theme.palette.primary.main,
+          arrowColor: paperBg,
+          backgroundColor: paperBg,
+          textColor: theme.palette.text.primary,
+          hideOverlay: true,
+          skipScroll: false,
+          scrollOffset: 100,
+          scrollDuration: 400,
+          spotlightPadding: 10,
+          blockTargetInteraction: false,
+          overlayClickAction: 'close',
+          buttons: ['back', 'close', 'primary', 'skip']
         }}
-        floaterProps={{
-          disableAnimation: true,
-          styles: {
-            arrow: {
-              color: paperBg,
-              length: 12,
-              spread: 12
-            }
-          }
+        styles={{
+          arrow: { color: paperBg }
+        }}
+        floatingOptions={{
+          hideArrow: false
         }}
       />
     </>

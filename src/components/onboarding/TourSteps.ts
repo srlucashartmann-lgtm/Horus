@@ -3,7 +3,7 @@ import { TourId } from './OnboardingProvider';
 
 type TourStepDef = Omit<Step, 'target'> & { target: string };
 
-const centerFloater: TourStepDef['floaterProps'] = {
+const centerFloating: NonNullable<TourStepDef['floatingOptions']> = {
   hideArrow: true
 };
 
@@ -20,12 +20,12 @@ const generalSteps: TourStepDef[] = [
     content:
       'O Hórus é seu Motor de Síntese Estratégica. Aqui você cruza dados de pesquisas com as vozes dos eleitores para tomar decisões rápidas e precisas. Vamos te guiar pelo sistema em menos de 2 minutos.',
     data: { welcome: true },
-    floaterProps: centerFloater
+    floatingOptions: centerFloating
   },
   {
     target: 'body',
     placement: 'center',
-    floaterProps: centerFloater,
+    floatingOptions: centerFloating,
     title: 'War Room — Seu Painel Central',
     content:
       'Esta é a home do Hórus. Mostra um resumo de tudo que está acontecendo na campanha. Os widgets são personalizáveis — clique no ⚙ para reorganizar.'
@@ -82,7 +82,7 @@ const generalSteps: TourStepDef[] = [
   {
     target: 'body',
     placement: 'center',
-    floaterProps: centerFloater,
+    floatingOptions: centerFloating,
     title: 'Pronto para começar! 🚀',
     content:
       'Cada módulo tem seu próprio tour explicando os detalhes. Ao abrir uma tela pela primeira vez, o tour inicia automaticamente. Você pode repetir qualquer tour clicando no ícone ❓ no topo da página. Bom trabalho!'

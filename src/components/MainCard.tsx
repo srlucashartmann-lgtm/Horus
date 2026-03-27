@@ -23,6 +23,9 @@ export interface MainCardProps {
   children?: ReactNode;
   subheader?: ReactNode | string;
   style?: CSSProperties;
+  /** repassado ao Card (ex.: âncoras do tour / testes) */
+  id?: string;
+  'data-tour'?: string;
   content?: boolean;
   contentSX?: CardContentProps['sx'];
   darkTitle?: boolean;
