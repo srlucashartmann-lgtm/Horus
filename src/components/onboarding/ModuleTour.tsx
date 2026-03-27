@@ -12,6 +12,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { ONBOARDING_TOUR_ENABLED } from 'config/onboarding';
 import { useOnboarding, TourId } from './OnboardingProvider';
 import { TOUR_STEPS } from './TourSteps';
 
@@ -381,6 +382,8 @@ function createTourTooltip(tourId: TourId, userFirstName: string) {
 }
 
 export default function ModuleTour({ tourId, autoStart = true, delay = 800 }: Props) {
+  if (!ONBOARDING_TOUR_ENABLED) return null;
+
   const theme = useTheme();
   const { data: session } = useSession();
   const { isTourCompleted, completeTour, activeTour, startTour, isRunning } = useOnboarding();

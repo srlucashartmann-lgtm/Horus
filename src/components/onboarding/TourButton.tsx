@@ -2,6 +2,7 @@
 
 import Tooltip from '@mui/material/Tooltip';
 import type { SxProps, Theme } from '@mui/material/styles';
+import { ONBOARDING_TOUR_ENABLED } from 'config/onboarding';
 import IconButton from 'components/@extended/IconButton';
 import { Eye } from 'lucide-react';
 import { useOnboarding, TourId } from './OnboardingProvider';
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export default function TourButton({ tourId, sx }: Props) {
+  if (!ONBOARDING_TOUR_ENABLED) return null;
+
   const { startTour, resetTour } = useOnboarding();
 
   const handleClick = () => {
